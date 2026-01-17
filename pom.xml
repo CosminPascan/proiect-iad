@@ -14,6 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <camel.version>4.6.0</camel.version>
+        <artemis.version>2.44.0</artemis.version>
         <jaxb.version>4.0.0</jaxb.version>
         <slf4j.version>2.0.13</slf4j.version>
     </properties>
@@ -50,6 +51,23 @@
             <version>${jaxb.version}</version>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-jms</artifactId>
+            <version>${camel.version}</version>
+        </dependency>
+        <!-- artemis broker dependencies -->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>artemis-jakarta-server</artifactId>
+            <version>${artemis.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>artemis-jakarta-client</artifactId>
+            <version>${artemis.version}</version>
+        </dependency>
+        <!---->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
