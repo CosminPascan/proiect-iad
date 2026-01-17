@@ -3,12 +3,15 @@ package model;
 import org.apache.camel.dataformat.bindy.annotation.CsvRecord;
 import org.apache.camel.dataformat.bindy.annotation.DataField;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
 @CsvRecord(separator = ",", skipFirstLine = true)
-public class Order {
+public class Order implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @DataField(pos = 1)
     private int orderId;
@@ -68,5 +71,16 @@ public class Order {
     public String getMonthFromDate() {
         LocalDate date = LocalDate.parse(this.date);
         return date.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", customerName='" + customerName + '\'' +
+                ", city='" + city + '\'' +
+                ", amount=" + amount +
+                ", date='" + date + '\'' +
+                '}';
     }
 }
