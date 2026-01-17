@@ -15,10 +15,20 @@ public class ChannelRoutes extends RouteBuilder {
     public void configure() throws JAXBException {
         config.JmsConfig.configure(getCamelContext());
 
+        onException(Exception.class)
+                .handled(true)
+                .log("Error while processing orders: ${exception.message}")
+                .to("file:data/out/errors");
+
         from("file:data/in?fileName=orders.csv&noop=true")
                 .unmarshal().bindy(BindyType.Csv, Order.class)
                 .setHeader("size", simple("${body.size}"))
                 .split().body()
+
+                //filtrare comenzi invalide
+                .filter(simple("${body.amount} > 0"))
+                .log("Valid order: ${body.orderId}")
+
                 .setHeader("month", simple("${body.monthFromDate}"))
                 .aggregate(header("month"), new MonthlySummaryAggregationStrategy())
                 .completionTimeout(2000)
